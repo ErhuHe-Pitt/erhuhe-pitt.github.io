@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 切钢网</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function switchTab(tab) {
+            document.getElementById('passwordTab').classList.toggle('text-red-500', tab === 'password');
+            document.getElementById('passwordTab').classList.toggle('border-red-500', tab === 'password');
+            document.getElementById('passwordTab').classList.toggle('text-gray-600', tab !== 'password');
+
+            document.getElementById('smsTab').classList.toggle('text-red-500', tab === 'sms');
+            document.getElementById('smsTab').classList.toggle('border-red-500', tab === 'sms');
+            document.getElementById('smsTab').classList.toggle('text-gray-600', tab !== 'sms');
+
+            document.getElementById('passwordForm').classList.toggle('hidden', tab !== 'password');
+            document.getElementById('smsForm').classList.toggle('hidden', tab !== 'sms');
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="w-full py-4 bg-white shadow">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
+            <img src="https://placehold.co/150x50" alt="切钢网 Logo">
+            <p class="text-gray-600">欢迎登录</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="flex items-center justify-center min-h-screen bg-blue-50">
+        <div class="max-w-6xl w-full flex bg-white shadow-lg rounded-lg overflow-hidden">
+            <!-- Left Side (Image & Marketing Text) -->
+            <div class="w-1/2 bg-gradient-to-br from-blue-100 to-blue-300 p-10 flex flex-col justify-center items-center">
+                <img src="https://placehold.co/400x300" alt="Dashboard Illustration" class="w-3/4 mb-6">
+                <h2 class="text-xl font-bold text-gray-800">快速报价上线了！</h2>
+                <p class="text-gray-600 mt-2">带给用户极致体验</p>
+            </div>
+
+            <!-- Right Side (Login Form) -->
+            <div class="w-1/2 p-10">
+                <!-- Tabs -->
+                <div class="flex border-b">
+                    <button id="passwordTab" class="w-full py-2 text-center font-semibold border-b-2 border-red-500 text-red-500">
+                        密码登录
+                    </button>
+                </div>
+
+                <!-- Password Login Form -->
+                <div id="passwordForm" class="mt-6">
+                    <input type="text" placeholder="请输入手机号" class="w-full border rounded px-4 py-2 mb-4">
+                    <div class="relative">
+                        <input type="password" placeholder="请输入密码" class="w-full border rounded px-4 py-2">
+                        <span class="absolute right-3 top-3 text-gray-400 cursor-pointer">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                    <button class="w-full bg-red-500 text-white font-semibold py-2 mt-6 rounded">登录</button>
+                    <div class="flex justify-between text-sm text-gray-600 mt-3">
+                        <a href="#" class="hover:underline">免费注册</a>
+                        <a href="#" class="hover:underline">忘记密码</a>
+                    </div>
+                </div>
+
+                <!-- SMS Login Form (Hidden Initially) -->
+                <div id="smsForm" class="mt-6 hidden">
+                    <input type="text" placeholder="请输入手机号" class="w-full border rounded px-4 py-2 mb-4">
+                    <div class="relative flex">
+                        <input type="text" placeholder="请输入验证码" class="w-full border rounded px-4 py-2">
+                        <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500 font-semibold">
+                            获取验证码
+                        </button>
+                    </div>
+                    <button class="w-full bg-red-500 text-white font-semibold py-2 mt-6 rounded">登录</button>
+                    <div class="flex justify-between text-sm text-gray-600 mt-3">
+                        <a href="#" class="hover:underline">免费注册</a>
+                        <a href="#" class="hover:underline">忘记密码</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- FontAwesome for Icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+</body>
+</html>

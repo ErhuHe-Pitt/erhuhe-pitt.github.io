@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>拼切集市</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <script>
+          tailwind.config = {
+            theme: {
+              extend: {
+                colors: {
+                  primary: {
+                    50: '#fef2f2',
+                    100: '#fee2e2',
+                    200: '#fecaca',
+                    300: '#fca5a5',
+                    400: '#f87171',
+                    500: '#ef4444',
+                    600: '#dc2626',
+                    700: '#b91c1c',
+                    800: '#991b1b',
+                    900: '#7f1d1d',
+                  }
+                },
+                boxShadow: {
+                  'custom': '0 10px 30px rgba(0, 0, 0, 0.08)',
+                  'hover': '0 20px 40px rgba(0, 0, 0, 0.12)',
+                  'card': '0 8px 32px rgba(0, 0, 0, 0.1)',
+                  'btn': '0 4px 10px rgba(220, 38, 38, 0.25)',
+                },
+                animation: {
+                  'float': 'float 6s ease-in-out infinite',
+                  'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                },
+                keyframes: {
+                  float: {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-10px)' },
+                  }
+                },
+                backdropBlur: {
+                  'xs': '2px',
+                }
+              }
+            }
+          }
+        </script>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+          
+          html {
+            scroll-behavior: smooth;
+          }
+          
+          body {
+            font-family: 'Noto Sans SC', sans-serif;
+          }
+          
+          /* 以下样式在页面其他部分使用 */
+          .glassmorphism-dark {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+          }
+          
+          .bg-gradient-animated {
+            background: linear-gradient(-45deg, #dc2626, #991b1b, #b91c1c, #ef4444);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+          }
+          
+          @keyframes gradient {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+          
+          .table-hover tr {
+            transition: all 0.3s ease;
+          }
+          
+          .table-hover tr:hover {
+            background-color: rgba(243, 244, 246, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          }
+          
+          .card-hover {
+            transition: all 0.3s ease;
+          }
+          
+          .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+          }
+          
+          .pulse-border {
+            box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            animation: pulse-border 2s infinite;
+          }
+          
+          @keyframes pulse-border {
+            0% {
+              box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            }
+            70% {
+              box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+            }
+            100% {
+              box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+            }
+          }
+          
+          .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          }
+          
+          .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          
+          /* 粒子背景 */
+          .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+          }
+          
+          .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+          }
+          
+          /* 骨架屏 */
+          .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+          }
+          
+          @keyframes loading {
+            0% {
+              background-position: 200% 0;
+            }
+            100% {
+              background-position: -200% 0;
+            }
+          }
+          
+          /* 徽章效果 */
+          .badge::before {
+              content: "";
+              position: absolute;
+              inset: 0;
+              border-radius: 50%;
+              padding: 3px;
+              background: linear-gradient(to right, #dc2626, #f87171);
+      
+              /* 修正：同时定义标准 mask 和 -webkit-mask */
+              mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+              -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      
+              /* 修正：同时定义标准 mask-composite 和 -webkit-mask-composite */
+              mask-composite: exclude;
+              -webkit-mask-composite: xor;
+      
+              animation: spin 4s linear infinite;
+          }
+          
+          @keyframes spin {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+          
+          /* 3D 卡片效果 */
+          .card-3d {
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+          }
+          
+          .card-3d-content {
+            transform: translateZ(20px);
+            transition: transform 0.3s ease;
+          }
+        </style>
+        <script>
+          function switchTab(tab) {
+              // Remove active classes from all tabs
+              document.getElementById('buyerTab').classList.remove('text-white', 'bg-primary-600', 'shadow-lg');
+              document.getElementById('sellerTab').classList.remove('text-white', 'bg-primary-600', 'shadow-lg');
+              
+              // Add neutral styling to all tabs
+              document.getElementById('buyerTab').classList.add('text-gray-600', 'bg-gray-100');
+              document.getElementById('sellerTab').classList.add('text-gray-600', 'bg-gray-100');
+              
+              // Add active styling to selected tab
+              document.getElementById(tab + 'Tab').classList.remove('text-gray-600', 'bg-gray-100');
+              document.getElementById(tab + 'Tab').classList.add('text-white', 'bg-primary-600', 'shadow-lg');
+              
+              // Hide all content
+              document.getElementById('buyerContent').classList.add('hidden');
+              document.getElementById('sellerContent').classList.add('hidden');
+              
+              // Show selected content with animation
+              const selectedContent = document.getElementById(tab + 'Content');
+              selectedContent.classList.remove('hidden');
+              selectedContent.classList.add('animate__animated', 'animate__fadeIn');
+              
+              // Remove animation classes after animation completes
+              setTimeout(() => {
+                selectedContent.classList.remove('animate__animated', 'animate__fadeIn');
+              }, 1000);
+          }
+          
+          // 观察元素进入视野
+          function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('visible');
+                  
+                  // 如果有Counter元素，开始计数
+                  if (entry.target.classList.contains('counter-trigger')) {
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                      const target = parseInt(counter.getAttribute('data-target'));
+                      const duration = 2000; // ms
+                      const step = target / (duration / 16); // 假设60fps
+                      let current = 0;
+                      
+                      const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                          counter.textContent = Math.ceil(current).toLocaleString();
+                          requestAnimationFrame(updateCounter);
+                        } else {
+                          counter.textContent = target.toLocaleString();
+                        }
+                      };
+                      
+                      updateCounter();
+                    });
+                  }
+                }
+              });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+              observer.observe(el);
+            });
+          }
+          
+          // 粒子背景
+          function createParticles() {
+            const containers = document.querySelectorAll('.particles-container');
+            
+            containers.forEach(container => {
+              const particles = document.createElement('div');
+              particles.classList.add('particles');
+              container.appendChild(particles);
+              
+              const particleCount = 25;
+              
+              for (let i = 0; i < particleCount; i++) {
+                const size = Math.random() * 6 + 3;
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.opacity = Math.random() * 0.5 + 0.2;
+                
+                // 随机位置
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.left = `${Math.random() * 100}%`;
+                
+                // 随机动画
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 10;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
+                
+                particles.appendChild(particle);
+              }
+            });
+          }
+          
+          // 3D 卡片效果
+          function init3DCards() {
+            const cards = document.querySelectorAll('.card-3d');
+            
+            cards.forEach(card => {
+              const content = card.querySelector('.card-3d-content');
+              
+              card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateY = (x - centerX) / 10;
+                const rotateX = (centerY - y) / 10;
+                
+                content.style.transform = `translateZ(40px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+              });
+              
+              card.addEventListener('mouseleave', () => {
+                content.style.transform = 'translateZ(20px) rotateX(0deg) rotateY(0deg)';
+              });
+            });
+          }
+          
+          // 页面加载完成后初始化
+          document.addEventListener('DOMContentLoaded', () => {
+            setupScrollAnimations();
+            createParticles();
+            init3DCards();
+            
+            // 主页涟漪效果 (非导航栏的涟漪效果)
+            document.querySelectorAll('.ripple').forEach(button => {
+              button.addEventListener('click', function(e) {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const circle = document.createElement('span');
+                circle.style.width = circle.style.height = `${Math.max(rect.width, rect.height) * 2}px`;
+                circle.style.left = `${x - circle.offsetWidth / 2}px`;
+                circle.style.top = `${y - circle.offsetHeight / 2}px`;
+                circle.classList.add('ripple-effect');
+                
+                const ripple = button.getElementsByClassName('ripple-effect')[0];
+                if (ripple) {
+                  ripple.remove();
+                }
+                
+                button.appendChild(circle);
+              });
+            });
+          });
+        </script>
+      </head>
+<body class="bg-gray-100">
+    <!-- 页头容器 -->
+    <div id="header-container"></div>
+
+    <!-- 拼切集市 Section -->
+    <div class="max-w-7xl mx-auto mt-6 bg-white p-6 rounded-lg shadow">
+        <!-- Title Section -->
+        <div class="flex justify-between items-center border-b pb-3">
+            <h2 class="text-xl font-semibold flex items-center">
+                <i class="fas fa-layer-group text-red-500 mr-2"></i> 拼切集市
+            </h2>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="mt-4 flex space-x-2">
+            <button class="bg-red-500 text-white px-4 py-1 text-sm rounded-full">中厚板</button>
+            <button class="bg-gray-200 text-gray-600 px-4 py-1 text-sm rounded-full">卷板材</button>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="mt-6 bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-gray-600 text-sm">当前搜索</h3>
+
+            <!-- 品名 Filter -->
+            <div class="mt-3 flex space-x-2">
+                <span class="font-semibold text-gray-700">品名:</span>
+                <div class="space-x-2">
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">中厚板</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">低合金中板</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">高强结构板</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">普通结构板</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">桥梁板</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">耐磨板</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">水电用钢板</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">模具钢板</button>
+                </div>
+            </div>
+
+            <!-- 材质 Filter -->
+            <div class="mt-3 flex space-x-2">
+                <span class="font-semibold text-gray-700">材质:</span>
+                <div class="space-x-2">
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q355C</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q355B</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q235A</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q460C</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q345R</button>
+                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">SM490A</button>
+                </div>
+            </div>
+
+            <!-- 规格 Filter -->
+            <div class="mt-3 grid grid-cols-4 gap-4">
+                <div>
+                    <label class="text-gray-700 font-medium block">厚度</label>
+                    <input type="text" placeholder="最小值 -" class="w-full border rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="text-gray-700 font-medium block">宽度</label>
+                    <input type="text" placeholder="最小值 -" class="w-full border rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="text-gray-700 font-medium block">重量</label>
+                    <input type="text" placeholder="最小值 -" class="w-full border rounded px-3 py-2">
+                </div>
+                <div class="flex items-end">
+                    <button class="bg-red-500 text-white px-4 py-2 rounded">确认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Table -->
+        <div class="mt-6 overflow-x-auto">
+            <table class="w-full border-collapse border text-gray-700">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border px-4 py-2">图片</th>
+                        <th class="border px-4 py-2">店铺名称</th>
+                        <th class="border px-4 py-2">品名</th>
+                        <th class="border px-4 py-2">材质</th>
+                        <th class="border px-4 py-2">规格</th>
+                        <th class="border px-4 py-2">片数</th>
+                        <th class="border px-4 py-2">重量 (吨)</th>
+                        <th class="border px-4 py-2">价格 (元/吨)</th>
+                        <th class="border px-4 py-2">交货地址</th>
+                        <th class="border px-4 py-2">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sample Row -->
+                    <tr class="bg-white">
+                        <td class="border px-4 py-2"><img src="https://placehold.co/50x50" alt="钢材图片"></td>
+                        <td class="border px-4 py-2">飞扬店铺</td>
+                        <td class="border px-4 py-2">中厚板</td>
+                        <td class="border px-4 py-2">Q355C</td>
+                        <td class="border px-4 py-2">10.00*2500.00*12500.00</td>
+                        <td class="border px-4 py-2">1</td>
+                        <td class="border px-4 py-2">3708</td>
+                        <td class="border px-4 py-2">安阳市</td>
+                        <td class="border px-4 py-2 text-gray-500 hover:text-red-500 cursor-pointer">&gt;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 页脚容器 -->
+    <div id="footer-container"></div>
+
+    <!-- 加载组件脚本 -->
+    <script src="/includes/load-components.js"></script>
+
+</body>
+</html>

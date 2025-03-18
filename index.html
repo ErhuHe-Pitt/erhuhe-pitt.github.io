@@ -1,3 +1,1031 @@
-<html>
-<h1> Hello World! </h1>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>切钢网 - 专业钢材交易平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#fef2f2',
+              100: '#fee2e2',
+              200: '#fecaca',
+              300: '#fca5a5',
+              400: '#f87171',
+              500: '#ef4444',
+              600: '#dc2626',
+              700: '#b91c1c',
+              800: '#991b1b',
+              900: '#7f1d1d',
+            }
+          },
+          boxShadow: {
+            'custom': '0 10px 30px rgba(0, 0, 0, 0.08)',
+            'hover': '0 20px 40px rgba(0, 0, 0, 0.12)',
+            'card': '0 8px 32px rgba(0, 0, 0, 0.1)',
+            'btn': '0 4px 10px rgba(220, 38, 38, 0.25)',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          },
+          backdropBlur: {
+            'xs': '2px',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    
+    /* 以下样式在页面其他部分使用 */
+    .glassmorphism-dark {
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .bg-gradient-animated {
+      background: linear-gradient(-45deg, #dc2626, #991b1b, #b91c1c, #ef4444);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+    
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+    .table-hover tr {
+      transition: all 0.3s ease;
+    }
+    
+    .table-hover tr:hover {
+      background-color: rgba(243, 244, 246, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .pulse-border {
+      box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+      animation: pulse-border 2s infinite;
+    }
+    
+    @keyframes pulse-border {
+      0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+      }
+    }
+    
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* 粒子背景 */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    /* 骨架屏 */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+    
+    /* 徽章效果 */
+    .badge::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(to right, #dc2626, #f87171);
+
+        /* 修正：同时定义标准 mask 和 -webkit-mask */
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+
+        /* 修正：同时定义标准 mask-composite 和 -webkit-mask-composite */
+        mask-composite: exclude;
+        -webkit-mask-composite: xor;
+
+        animation: spin 4s linear infinite;
+    }
+    
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    /* 3D 卡片效果 */
+    .card-3d {
+      transform-style: preserve-3d;
+      transform: perspective(1000px);
+    }
+    
+    .card-3d-content {
+      transform: translateZ(20px);
+      transition: transform 0.3s ease;
+    }
+  </style>
+  <script>
+    function switchTab(tab) {
+        // Remove active classes from all tabs
+        document.getElementById('buyerTab').classList.remove('text-white', 'bg-primary-600', 'shadow-lg');
+        document.getElementById('sellerTab').classList.remove('text-white', 'bg-primary-600', 'shadow-lg');
+        
+        // Add neutral styling to all tabs
+        document.getElementById('buyerTab').classList.add('text-gray-600', 'bg-gray-100');
+        document.getElementById('sellerTab').classList.add('text-gray-600', 'bg-gray-100');
+        
+        // Add active styling to selected tab
+        document.getElementById(tab + 'Tab').classList.remove('text-gray-600', 'bg-gray-100');
+        document.getElementById(tab + 'Tab').classList.add('text-white', 'bg-primary-600', 'shadow-lg');
+        
+        // Hide all content
+        document.getElementById('buyerContent').classList.add('hidden');
+        document.getElementById('sellerContent').classList.add('hidden');
+        
+        // Show selected content with animation
+        const selectedContent = document.getElementById(tab + 'Content');
+        selectedContent.classList.remove('hidden');
+        selectedContent.classList.add('animate__animated', 'animate__fadeIn');
+        
+        // Remove animation classes after animation completes
+        setTimeout(() => {
+          selectedContent.classList.remove('animate__animated', 'animate__fadeIn');
+        }, 1000);
+    }
+    
+    // 观察元素进入视野
+    function setupScrollAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            
+            // 如果有Counter元素，开始计数
+            if (entry.target.classList.contains('counter-trigger')) {
+              const counters = entry.target.querySelectorAll('.counter');
+              counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000; // ms
+                const step = target / (duration / 16); // 假设60fps
+                let current = 0;
+                
+                const updateCounter = () => {
+                  current += step;
+                  if (current < target) {
+                    counter.textContent = Math.ceil(current).toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                  } else {
+                    counter.textContent = target.toLocaleString();
+                  }
+                };
+                
+                updateCounter();
+              });
+            }
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+      });
+    }
+    
+    // 粒子背景
+    function createParticles() {
+      const containers = document.querySelectorAll('.particles-container');
+      
+      containers.forEach(container => {
+        const particles = document.createElement('div');
+        particles.classList.add('particles');
+        container.appendChild(particles);
+        
+        const particleCount = 25;
+        
+        for (let i = 0; i < particleCount; i++) {
+          const size = Math.random() * 6 + 3;
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.opacity = Math.random() * 0.5 + 0.2;
+          
+          // 随机位置
+          particle.style.top = `${Math.random() * 100}%`;
+          particle.style.left = `${Math.random() * 100}%`;
+          
+          // 随机动画
+          const duration = Math.random() * 20 + 10;
+          const delay = Math.random() * 10;
+          particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
+          
+          particles.appendChild(particle);
+        }
+      });
+    }
+    
+    // 3D 卡片效果
+    function init3DCards() {
+      const cards = document.querySelectorAll('.card-3d');
+      
+      cards.forEach(card => {
+        const content = card.querySelector('.card-3d-content');
+        
+        card.addEventListener('mousemove', e => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateY = (x - centerX) / 10;
+          const rotateX = (centerY - y) / 10;
+          
+          content.style.transform = `translateZ(40px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          content.style.transform = 'translateZ(20px) rotateX(0deg) rotateY(0deg)';
+        });
+      });
+    }
+    
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      setupScrollAnimations();
+      createParticles();
+      init3DCards();
+      
+      // 主页涟漪效果 (非导航栏的涟漪效果)
+      document.querySelectorAll('.ripple').forEach(button => {
+        button.addEventListener('click', function(e) {
+          const rect = button.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const circle = document.createElement('span');
+          circle.style.width = circle.style.height = `${Math.max(rect.width, rect.height) * 2}px`;
+          circle.style.left = `${x - circle.offsetWidth / 2}px`;
+          circle.style.top = `${y - circle.offsetHeight / 2}px`;
+          circle.classList.add('ripple-effect');
+          
+          const ripple = button.getElementsByClassName('ripple-effect')[0];
+          if (ripple) {
+            ripple.remove();
+          }
+          
+          button.appendChild(circle);
+        });
+      });
+    });
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- 导航栏 -->
+  <div id="header-container"></div>
+
+  <!-- 主要内容 -->
+  <main class="max-w-7xl mx-auto px-4 pt-8 pb-16">
+    <!-- 首页 Banner -->
+    <div class="relative overflow-hidden bg-gradient-animated text-white text-center py-16 rounded-2xl shadow-custom mb-12 particles-container">
+      <div class="relative z-10 animate-on-scroll">
+        <h1 class="text-5xl font-bold mb-3 animate__animated animate__fadeInDown">2024年度 火热预售中</h1>
+        <p class="text-xl opacity-90 animate__animated animate__fadeInUp">【首页广告尊享座席】</p>
+        <p class="mt-6 font-bold text-2xl flex items-center justify-center animate__animated animate__fadeInUp animate__delay-1s">
+          <i class="fas fa-phone-alt mr-2 animate-pulse-slow"></i> 13321870998
+        </p>
+        <button class="mt-8 px-10 py-4 bg-white text-primary-700 font-semibold rounded-full hover:bg-gray-100 transition-all transform hover:scale-110 shadow-lg hover:shadow-xl animate__animated animate__fadeInUp animate__delay-2s ripple">
+          立即联系
+        </button>
+        
+        <!-- 统计数字 -->
+        <div class="grid grid-cols-3 gap-8 max-w-3xl mx-auto mt-12 counter-trigger">
+          <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+            <div class="text-4xl font-bold text-white counter" data-target="15736">0</div>
+            <div class="text-sm mt-2">平台商家</div>
+          </div>
+          <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+            <div class="text-4xl font-bold text-white counter" data-target="28693">0</div>
+            <div class="text-sm mt-2">月交易量(吨)</div>
+          </div>
+          <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4">
+            <div class="text-4xl font-bold text-white counter" data-target="99">0</div>
+            <div class="text-sm mt-2">客户满意度(%)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主内容区域网格 -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-14">
+      <!-- 左侧用户中心 -->
+      <aside class="lg:order-last animate-on-scroll">
+        <div class="bg-white rounded-2xl shadow-card p-6 h-full card-hover">
+          <!-- 用户信息 -->
+          <div class="flex flex-col items-center pb-6 border-b border-gray-100">
+            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 overflow-hidden relative badge">
+              <img src="https://placehold.co/100x100" alt="User Avatar" class="w-full h-full object-cover">
+            </div>
+            <p class="text-gray-700 font-medium mt-2">欢迎登录～</p>
+            <div class="mt-4 flex space-x-4">
+              <a href="#" class="px-6 py-2 bg-primary-600 text-white rounded-full text-sm font-medium hover:bg-primary-700 transition-all transform hover:scale-105 shadow-btn hover:shadow-lg ripple">登录</a>
+              <a href="#" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 transition-all transform hover:scale-105 hover:shadow-lg ripple">注册</a>
+            </div>
+          </div>
+
+          <!-- 选项卡切换 -->
+          <div class="mt-6">
+            <div class="flex rounded-full overflow-hidden mb-6 p-1 bg-gray-100">
+              <button id="buyerTab" onclick="switchTab('buyer')" class="w-1/2 py-3 px-2 text-center text-white bg-primary-600 font-medium transition-all rounded-full shadow-lg ripple">
+                买方中心
+              </button>
+              <button id="sellerTab" onclick="switchTab('seller')" class="w-1/2 py-3 px-2 text-center text-gray-600 bg-gray-100 font-medium transition-all ripple">
+                卖方中心
+              </button>
+            </div>
+
+            <!-- 买方中心内容 -->
+            <div id="buyerContent" class="tab-content">
+              <div class="grid grid-cols-3 gap-5">
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-file-invoice text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">订单管理</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-file-contract text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">我的合同</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-receipt text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">发票管理</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-search-dollar text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">询单管理</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-wallet text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">余额管理</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-users-cog text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">子账户管理</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 卖方中心内容 -->
+            <div id="sellerContent" class="tab-content hidden">
+              <div class="grid grid-cols-3 gap-5">
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-box text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">商品管理</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-file-invoice text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">订单管理</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-truck text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">发货管理</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-search-dollar text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">询单池</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-file-signature text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">我的报价</p>
+                </div>
+                <div class="flex flex-col items-center cursor-pointer group">
+                  <div class="w-16 h-16 rounded-xl bg-primary-50 flex items-center justify-center mb-3 group-hover:bg-primary-100 transition-all transform group-hover:scale-110 group-hover:shadow-lg">
+                    <i class="fas fa-file-contract text-primary-600 text-xl"></i>
+                  </div>
+                  <p class="text-xs text-gray-700 group-hover:text-primary-600 transition-colors">合同管理</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- 推荐产品 -->
+      <section class="lg:col-span-3 animate-on-scroll">
+        <div class="bg-white rounded-2xl shadow-card p-6 h-full card-hover">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-xl font-semibold flex items-center text-gray-800">
+              <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center mr-3 animate-pulse">
+                <i class="fas fa-gift text-primary-600"></i>
+              </div>
+              推荐产品
+            </h2>
+            <div class="flex space-x-2">
+              <button class="px-5 py-2 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-105 hover:shadow-lg text-sm font-medium ripple">
+                <i class="fas fa-sync-alt mr-2"></i> 刷新
+              </button>
+              <button class="px-5 py-2 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-all transform hover:scale-105 shadow-btn hover:shadow-lg text-sm font-medium ripple">
+                查看更多
+              </button>
+            </div>
+          </div>
+          
+          <div class="overflow-x-auto">
+            <table class="w-full table-hover">
+              <thead>
+                <tr>
+                  <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50 rounded-tl-xl">图片</th>
+                  <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">店铺名称</th>
+                  <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">品名</th>
+                  <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">材质</th>
+                  <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">规格</th>
+                  <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">重量</th>
+                  <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">价格 (元/吨)</th>
+                  <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50 rounded-tr-xl">交货地址</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-gray-100">
+                  <td class="py-5 px-4">
+                    <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 hover:shadow-lg transition-all transform hover:scale-110">
+                      <img src="https://placehold.co/100x100" alt="钢材图片" class="w-full h-full object-cover">
+                    </div>
+                  </td>
+                  <td class="py-5 px-4 font-medium">宝山销售</td>
+                  <td class="py-5 px-4">中厚板</td>
+                  <td class="py-5 px-4">Q355C</td>
+                  <td class="py-5 px-4">100.00*100.00*10.00</td>
+                  <td class="py-5 px-4">1030</td>
+                  <td class="py-5 px-4 font-semibold text-primary-600">¥3,980</td>
+                  <td class="py-5 px-4">
+                    <div class="flex items-center">
+                      <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                      安阳市
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-5 px-4">
+                    <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 hover:shadow-lg transition-all transform hover:scale-110">
+                      <img src="https://placehold.co/100x100" alt="钢材图片" class="w-full h-full object-cover">
+                    </div>
+                  </td>
+                  <td class="py-5 px-4 font-medium">飞腾销售</td>
+                  <td class="py-5 px-4">中厚板</td>
+                  <td class="py-5 px-4">Q460C</td>
+                  <td class="py-5 px-4">8.00*2500.00*7000.00</td>
+                  <td class="py-5 px-4">3399</td>
+                  <td class="py-5 px-4 font-semibold text-primary-600">¥4,250</td>
+                  <td class="py-5 px-4">
+                    <div class="flex items-center">
+                      <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                      河北唐山市
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 宣传横幅 -->
+    <div class="relative overflow-hidden bg-gradient-animated text-white rounded-2xl shadow-lg py-10 px-8 mb-14 particles-container animate-on-scroll">
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-bold mb-3">切割售后·买的放心·卖的安心</h2>
+          <div class="flex flex-wrap items-center gap-6 mt-5">
+            <div class="flex items-center bg-white/10 backdrop-blur-sm p-3 rounded-xl transition-all hover:bg-white/20">
+              <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                <i class="fas fa-check text-white text-lg"></i>
+              </div>
+              <span class="text-lg">专业公平</span>
+            </div>
+            <div class="flex items-center bg-white/10 backdrop-blur-sm p-3 rounded-xl transition-all hover:bg-white/20">
+              <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                <i class="fas fa-thumbs-up text-white text-lg"></i>
+              </div>
+              <span class="text-lg">省心省力</span>
+            </div>
+            <div class="flex items-center bg-white/10 backdrop-blur-sm p-3 rounded-xl transition-all hover:bg-white/20">
+              <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                <i class="fas fa-shield-alt text-white text-lg"></i>
+              </div>
+              <span class="text-lg">客户放心交易</span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 md:mt-0">
+          <button class="px-8 py-4 bg-white text-primary-700 font-semibold rounded-full hover:bg-gray-100 transition-all transform hover:scale-110 shadow-lg hover:shadow-xl ripple">
+            了解更多
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 拼切集市 -->
+    <section class="bg-white rounded-2xl shadow-card p-6 mb-14 animate-on-scroll card-hover">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-xl font-semibold flex items-center text-gray-800">
+          <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center mr-3 animate-pulse">
+            <i class="fas fa-shopping-bag text-primary-600"></i>
+          </div>
+          拼切集市
+        </h2>
+        <a href="#" class="text-primary-600 hover:text-primary-700 transition-colors text-sm font-medium flex items-center hover:translate-x-1 transition-transform">
+          查看更多 <i class="fas fa-chevron-right ml-1 text-xs"></i>
+        </a>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-8">
+        <button class="px-6 py-2 bg-primary-600 text-white rounded-full text-sm font-medium hover:bg-primary-700 transition-all transform hover:scale-105 shadow-btn ripple">
+          中厚板
+        </button>
+        <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all transform hover:scale-105 ripple">
+          卷板材
+        </button>
+        <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all transform hover:scale-105 ripple">
+          特殊钢
+        </button>
+        <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all transform hover:scale-105 ripple">
+          不锈钢
+        </button>
+        <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all transform hover:scale-105 ripple">
+          镀锌板
+        </button>
+        <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all transform hover:scale-105 ripple">
+          合金钢
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full table-hover">
+          <thead>
+            <tr>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50 rounded-tl-xl">图片</th>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">店铺名称</th>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">品名</th>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">材质</th>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">规格</th>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">片数</th>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">重量 (吨)</th>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">价格 (元/吨)</th>
+              <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">交货地址</th>
+              <th class="py-5 px-4 text-center text-gray-600 font-medium bg-gray-50 rounded-tr-xl">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-100">
+              <td class="py-5 px-4">
+                <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 hover:shadow-lg transition-all transform hover:scale-110">
+                  <img src="https://placehold.co/100x100" alt="钢材图片" class="w-full h-full object-cover">
+                </div>
+              </td>
+              <td class="py-5 px-4 font-medium">飞扬店铺</td>
+              <td class="py-5 px-4">中厚板</td>
+              <td class="py-5 px-4">Q355B</td>
+              <td class="py-5 px-4">27.10*2600.00*13100.00</td>
+              <td class="py-5 px-4">-</td>
+              <td class="py-5 px-4">3605</td>
+              <td class="py-5 px-4 font-semibold text-primary-600">¥4,120</td>
+              <td class="py-5 px-4">
+                <div class="flex items-center">
+                  <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                  河北唐山市
+                </div>
+              </td>
+              <td class="py-5 px-4 text-center">
+                <button class="w-10 h-10 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-110 hover:shadow-lg ripple">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="py-5 px-4">
+                <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 hover:shadow-lg transition-all transform hover:scale-110">
+                  <img src="https://placehold.co/100x100" alt="钢材图片" class="w-full h-full object-cover">
+                </div>
+              </td>
+              <td class="py-5 px-4 font-medium">飞扬店铺</td>
+              <td class="py-5 px-4">中厚板</td>
+              <td class="py-5 px-4">Q355C</td>
+              <td class="py-5 px-4">10.00*2500.00*12500.00</td>
+              <td class="py-5 px-4">-</td>
+              <td class="py-5 px-4">3708</td>
+              <td class="py-5 px-4 font-semibold text-primary-600">¥3,950</td>
+              <td class="py-5 px-4">
+                <div class="flex items-center">
+                  <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                  安阳市
+                </div>
+              </td>
+              <td class="py-5 px-4 text-center">
+                <button class="w-10 h-10 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-110 hover:shadow-lg ripple">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+              </td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="py-5 px-4">
+                <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 hover:shadow-lg transition-all transform hover:scale-110">
+                  <img src="https://placehold.co/100x100" alt="钢材图片" class="w-full h-full object-cover">
+                </div>
+              </td>
+              <td class="py-5 px-4 font-medium">宝山店铺</td>
+              <td class="py-5 px-4">低合金中板</td>
+              <td class="py-5 px-4">Q355C</td>
+              <td class="py-5 px-4">100.00*1000.00*1000.00</td>
+              <td class="py-5 px-4">-</td>
+              <td class="py-5 px-4">515</td>
+              <td class="py-5 px-4 font-semibold text-primary-600">¥4,080</td>
+              <td class="py-5 px-4">
+                <div class="flex items-center">
+                  <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                  安阳市
+                </div>
+              </td>
+              <td class="py-5 px-4 text-center">
+                <button class="w-10 h-10 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-110 hover:shadow-lg ripple">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td class="py-5 px-4">
+                <div class="w-14 h-14 rounded-xl overflow-hidden bg-gray-100 hover:shadow-lg transition-all transform hover:scale-110">
+                  <img src="https://placehold.co/100x100" alt="钢材图片" class="w-full h-full object-cover">
+                </div>
+              </td>
+              <td class="py-5 px-4 font-medium">宝山店铺</td>
+              <td class="py-5 px-4">低合金中板</td>
+              <td class="py-5 px-4">SM490A</td>
+              <td class="py-5 px-4">13.00*2580.00*9650.00</td>
+              <td class="py-5 px-4">-</td>
+              <td class="py-5 px-4">3605</td>
+              <td class="py-5 px-4 font-semibold text-primary-600">¥4,520</td>
+              <td class="py-5 px-4">
+                <div class="flex items-center">
+                  <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                  上海交货
+                </div>
+              </td>
+              <td class="py-5 px-4 text-center">
+                <button class="w-10 h-10 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-110 hover:shadow-lg ripple">
+                  <i class="fas fa-arrow-right"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 发起询价 & 采购要求 -->
+    <section class="bg-white rounded-2xl shadow-card p-6 mb-14 animate-on-scroll card-hover">
+      <div class="mb-10">
+        <h2 class="text-xl font-semibold flex items-center text-gray-800 mb-8">
+          <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center mr-3 animate-pulse">
+            <i class="fas fa-search-dollar text-primary-600"></i>
+          </div>
+          发起询价
+        </h2>
+        
+        <!-- 3D 卡片效果 -->
+        <div class="card-3d mb-8">
+          <div class="card-3d-content">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-gray-700 font-medium mb-2">分类 <span class="text-primary-600">*</span></label>
+                <div class="relative">
+                  <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                    <option>请选择分类</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium mb-2">材质 <span class="text-primary-600">*</span></label>
+                <div class="relative">
+                  <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                    <option>请选择材质</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium mb-2">厚度 <span class="text-primary-600">*</span></label>
+                <input type="text" placeholder="请输入厚度 mm" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium mb-2">厚度公差 <span class="text-primary-600">*</span></label>
+                <div class="relative">
+                  <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                    <option>请选择厚度公差</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium mb-2">密度</label>
+                <input type="text" value="0吨/cm³" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-gray-500" readonly>
+              </div>
+              <div>
+                <label class="block text-gray-700 font-medium mb-2">用途 <span class="text-primary-600">*</span></label>
+                <div class="relative">
+                  <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                    <option>请选择用途</option>
+                  </select>
+                  <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                    <i class="fas fa-chevron-down text-gray-400"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 商品 Section -->
+      <div class="pb-10 mb-10 border-b border-gray-100">
+        <div class="flex items-center mb-8">
+          <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center mr-3 pulse-border">
+            <span class="text-primary-600 font-semibold text-lg">1</span>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-800">商品 1</h3>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">切割形状 <span class="text-primary-600">*</span></label>
+            <div class="relative">
+              <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                <option>请选择切割形状</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">片数 <span class="text-primary-600">*</span></label>
+            <input type="text" placeholder="请输入片数" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">钢厂要求 <span class="text-primary-600">*</span></label>
+            <div class="relative">
+              <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                <option>请选择钢厂要求</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-xl p-5">
+          <p class="text-gray-700">按规格推算重量 (无附加厚度)：<span class="font-bold text-primary-600">0吨</span></p>
+        </div>
+      </div>
+
+      <!-- 采购要求 Section -->
+      <div>
+        <h2 class="text-xl font-semibold flex items-center text-gray-800 mb-8">
+          <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center mr-3 animate-pulse">
+            <i class="fas fa-shopping-cart text-primary-600"></i>
+          </div>
+          采购要求
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">报价截止时间 <span class="text-primary-600">*</span></label>
+            <div class="relative">
+              <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                <option>请选择报价截止时间</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">报价有效 <span class="text-primary-600">*</span></label>
+            <div class="relative">
+              <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                <option>请选择报价有效天数</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">期望交货时间 <span class="text-primary-600">*</span></label>
+            <input type="text" placeholder="请输入期望交货时间 天" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">供应商范围 <span class="text-primary-600">*</span></label>
+            <div class="relative">
+              <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                <option>请选择供应商范围</option>
+              </select>
+              <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                <i class="fas fa-chevron-down text-gray-400"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-8">
+          <label class="block text-gray-700 font-medium mb-3">图片</label>
+          <div class="flex items-center">
+            <div class="w-36 h-36 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center text-gray-400 hover:bg-gray-50 hover:border-primary-400 transition-all cursor-pointer group">
+              <i class="fas fa-cloud-upload-alt text-3xl mb-3 group-hover:text-primary-500 transition-all"></i>
+              <span class="text-sm group-hover:text-primary-500 transition-all">点击上传</span>
+              <span class="text-xs mt-1 text-gray-400">支持JPG、PNG格式</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-8">
+          <label class="block text-gray-700 font-medium mb-3">备注</label>
+          <textarea class="w-full border border-gray-300 rounded-xl px-4 py-3 h-36 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all" placeholder="请输入备注"></textarea>
+        </div>
+        
+        <div class="flex items-center mb-10">
+          <label class="flex items-center cursor-pointer">
+            <div class="relative">
+              <input type="checkbox" class="sr-only">
+              <div class="w-6 h-6 border-2 rounded-md border-gray-300 mr-3 transition-all"></div>
+              <div class="absolute left-0 top-0 w-6 h-6 flex items-center justify-center opacity-0 transition-all">
+                <i class="fas fa-check text-xs text-primary-600"></i>
+              </div>
+            </div>
+            <span class="text-gray-700">匿名询单</span>
+          </label>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row justify-between gap-4">
+          <button class="bg-primary-600 text-white px-10 py-4 rounded-full font-semibold hover:bg-primary-700 transition-all transform hover:scale-105 shadow-btn hover:shadow-xl flex items-center justify-center ripple">
+            <i class="fas fa-paper-plane mr-2"></i> 获取报价
+          </button>
+          <button class="bg-gray-100 text-gray-700 px-10 py-4 rounded-full font-semibold hover:bg-gray-200 transition-all transform hover:scale-105 hover:shadow-lg flex items-center justify-center ripple">
+            <i class="fas fa-save mr-2"></i> 保存草稿箱
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+        <!-- 页脚容器 -->
+        <div id="footer-container"></div>
+
+  <script>
+    // 模拟复选框行为
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const container = checkbox.parentElement;
+        const checkIcon = container.querySelector('.fa-check').parentElement;
+        const border = container.querySelector('.border');
+        
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+            border.classList.remove('border-gray-300');
+            border.classList.add('border-primary-600', 'bg-primary-50');
+            checkIcon.classList.remove('opacity-0');
+            checkIcon.classList.add('opacity-100');
+          } else {
+            border.classList.remove('border-primary-600', 'bg-primary-50');
+            border.classList.add('border-gray-300');
+            checkIcon.classList.remove('opacity-100');
+            checkIcon.classList.add('opacity-0');
+          }
+        });
+        
+        container.addEventListener('click', function() {
+          checkbox.checked = !checkbox.checked;
+          
+          // 触发change事件
+          const event = new Event('change');
+          checkbox.dispatchEvent(event);
+        });
+      });
+    });
+  </script>
+  
+  <!-- 加载组件脚本 -->
+  <script src="/includes/load-components.js"></script>
+</body>
 </html>
