@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - MetalBar Tech Network</title>
+    <title>Register - MetalBar Tech Network</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -55,16 +55,6 @@
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-input {
-            transition: all 0.3s ease;
-        }
-        
-        .form-input:focus {
-            border-color: rgba(239, 68, 68, 0.5);
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
-            outline: none;
         }
         
         .ripple {
@@ -140,24 +130,29 @@
         .animate-float {
             animation: float 6s ease-in-out infinite;
         }
-    </style>
-    <script>
-        // Toggle password visibility
-        function togglePasswordVisibility() {
-            const passwordInput = document.getElementById('password-input');
-            const eyeIcon = document.getElementById('eye-icon');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
-            }
+        
+        /* Typing effect animation */
+        .typing-indicator::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
         }
         
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        
+        /* Copy success animation */
+        @keyframes copied {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .copied {
+            animation: copied 0.5s ease;
+        }
+    </style>
+    <script>
         // Create particle background
         function createParticles() {
             const container = document.getElementById('particles-container');
@@ -191,60 +186,25 @@
             }
         }
         
-        // Show login alert
-        function showLoginAlert() {
-            // Get username
-            const username = document.getElementById('username-input').value;
-            
-            // Create alert box
-            const alertEl = document.createElement('div');
-            alertEl.className = 'fixed top-5 right-5 bg-white rounded-lg shadow-lg p-4 max-w-md animate__animated animate__fadeIn z-50 border-l-4 border-primary-600';
-            alertEl.innerHTML = `
-                <div class="flex items-start">
-                    <div class="mr-3 text-primary-600 mt-0.5">
-                        <i class="fas fa-exclamation-circle text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-gray-800">User Not Registered</h3>
-                        <p class="text-gray-600">Username "${username || 'The username you entered'}" is not registered. Please go to the registration page.</p>
-                        <div class="mt-3 flex justify-end">
-                            <button onclick="closeAlert(this.parentNode.parentNode.parentNode)" class="mr-2 px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-sm">
-                                Close
-                            </button>
-                            <a href="#" class="px-3 py-1 bg-primary-600 hover:bg-primary-700 text-white rounded text-sm">
-                                Register
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            // Add to page
-            document.body.appendChild(alertEl);
-            
-            // Auto close after 5 seconds
-            setTimeout(() => {
-                if (document.body.contains(alertEl)) {
-                    alertEl.classList.add('animate__fadeOut');
-                    setTimeout(() => {
-                        if (document.body.contains(alertEl)) {
-                            document.body.removeChild(alertEl);
-                        }
-                    }, 500);
-                }
-            }, 5000);
-            
-            return false; // Prevent form submission
-        }
-        
-        // Close alert
-        function closeAlert(element) {
-            element.classList.add('animate__fadeOut');
-            setTimeout(() => {
-                if (document.body.contains(element)) {
-                    document.body.removeChild(element);
-                }
-            }, 500);
+        // Copy email address
+        function copyEmail() {
+            const email = "support@metalbartech.com";
+            navigator.clipboard.writeText(email).then(function() {
+                const copyButton = document.getElementById('copy-button');
+                const originalText = copyButton.innerHTML;
+                
+                // Change button text and style
+                copyButton.innerHTML = '<i class="fas fa-check mr-2"></i>Copied';
+                copyButton.classList.add('bg-green-600');
+                copyButton.classList.add('copied');
+                
+                // Restore after 3 seconds
+                setTimeout(() => {
+                    copyButton.innerHTML = originalText;
+                    copyButton.classList.remove('bg-green-600');
+                    copyButton.classList.remove('copied');
+                }, 2000);
+            });
         }
         
         // Initialize after page loads
@@ -290,83 +250,115 @@
                     <div class="absolute -right-10 bottom-10 w-36 h-36 rounded-full bg-primary-300 opacity-40"></div>
                 </div>
                 
-                <div class="w-4/5 mb-8 relative animate-float">
-                    <img src="logo.png" alt="Dashboard Illustration" class="w-full rounded-xl shadow-lg">
-                    <!-- <div class="absolute -top-4 -right-4 w-16 h-16 bg-primary-600 text-white rounded-full flex items-center justify-center text-lg font-bold animate-pulse">
-                        New
-                    </div> -->
+                <!-- Illustration - Verification Process -->
+                <div class="w-4/5 mb-6 animate-float">
+                    <img src="logo.png" alt="Registration Process" class="w-full rounded-xl shadow-lg">
                 </div>
                 
-                <h2 class="text-2xl font-bold text-gray-800 mb-3">Quick Quote Now Live!</h2>
-                <p class="text-gray-600 text-center">Delivering the ultimate user experience for efficient transactions</p>
-                
-                <div class="mt-8 grid grid-cols-2 gap-4 w-4/5">
-                    <div class="bg-white/70 backdrop-blur-sm rounded-lg p-3 shadow-md flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center mr-3">
-                            <i class="fas fa-bolt text-primary-600"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Rapid Processing</h4>
-                            <p class="text-xs text-gray-600">Boost productivity</p>
+                <!-- Registration process diagram -->
+                <div class="w-full space-y-6 mt-4">
+                    <h3 class="font-bold text-xl text-gray-800 text-center">Verification Process</h3>
+                    
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-lg">1</div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800">Contact Us</h4>
+                            <p class="text-gray-600 text-sm">Request an account via email</p>
                         </div>
                     </div>
-                    <div class="bg-white/70 backdrop-blur-sm rounded-lg p-3 shadow-md flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center mr-3">
-                            <i class="fas fa-shield-alt text-primary-600"></i>
+                    
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-lg">2</div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800">Qualification Review</h4>
+                            <p class="text-gray-600 text-sm">We'll review your business credentials</p>
                         </div>
-                        <div>
-                            <h4 class="font-semibold text-gray-800">Secure Protection</h4>
-                            <p class="text-xs text-gray-600">Multiple security layers</p>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-lg">3</div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold text-gray-800">Account Activation</h4>
+                            <p class="text-gray-600 text-sm">Your account will be activated upon approval</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right side (login form) -->
+            <!-- Right side (registration information) -->
             <div class="w-1/2 p-12 bg-white flex flex-col justify-center">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h1>
-                    <p class="text-gray-500">Please log in to your account to continue</p>
+                <div class="mb-8 animate__animated animate__fadeIn">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">Business Registration</h1>
+                    <div class="h-1 w-16 bg-primary-600 rounded-full mb-6"></div>
+                    <p class="text-gray-500">Thank you for your interest. Self-registration is currently not available</p>
                 </div>
                 
-                <!-- Login form -->
-                <form id="login-form" onsubmit="return showLoginAlert()" class="space-y-6">
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Username</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-user text-gray-400"></i>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-lg mb-8 animate__animated animate__fadeIn animate__delay-1s">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-info-circle text-blue-500 text-xl"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-lg font-medium text-blue-800">Registration Information</h3>
+                            <div class="mt-2 text-blue-700">
+                                <p>For security purposes, we need to manually verify all users. Please contact our staff to register.</p>
                             </div>
-                            <input type="text" id="username-input" placeholder="Enter your username" class="form-input w-full border border-gray-300 rounded-lg pl-10 pr-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all">
                         </div>
                     </div>
+                </div>
+                
+                <!-- Contact email -->
+                <div class="bg-gray-50 p-6 rounded-xl mb-8 animate__animated animate__fadeIn animate__delay-2s">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Contact Us</h3>
+                    <p class="text-gray-600 mb-5">Please send an email to the following address with your company information:</p>
                     
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Password</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-lock text-gray-400"></i>
-                            </div>
-                            <input id="password-input" type="password" placeholder="Enter your password" class="form-input w-full border border-gray-300 rounded-lg pl-10 pr-10 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all">
-                            <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                <i id="eye-icon" class="fas fa-eye text-gray-400 hover:text-gray-600 transition-colors"></i>
-                            </button>
+                    <div class="flex items-center bg-white p-4 rounded-lg border border-gray-200 mb-4">
+                        <div class="mr-3 text-primary-600">
+                            <i class="fas fa-envelope text-xl"></i>
                         </div>
+                        <div class="flex-grow">
+                            <div class="font-medium text-gray-800 typing-indicator">support@metalbartech.com</div>
+                        </div>
+                        <button id="copy-button" onclick="copyEmail()" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 text-sm focus:outline-none flex items-center">
+                            <i class="far fa-copy mr-2"></i> Copy Email
+                        </button>
                     </div>
                     
-                    <div class="flex items-center">
-                        <input type="checkbox" id="remember" class="w-4 h-4 rounded border-gray-300 text-primary-600">
-                        <label for="remember" class="ml-2 text-gray-600 text-sm">Remember me</label>
+                    <div class="text-sm text-gray-500">
+                        <p>Our staff will contact you within 1-3 business days.</p>
                     </div>
-                    
-                    <button type="submit" class="w-full bg-primary-600 text-white font-semibold py-3 rounded-lg hover:bg-primary-700 transition-colors shadow-md hover:shadow-lg transform hover:translate-y-px ripple focus:outline-none">
-                        <i class="fas fa-sign-in-alt mr-2"></i> Login
-                    </button>
-                    
-                    <div class="flex justify-between text-sm text-gray-600">
-                        <a href="#" class="hover:text-primary-600 transition-colors">Sign up for free</a>
-                    </div>
-                </form>
+                </div>
+                
+                <!-- Required information -->
+                <div class="animate__animated animate__fadeIn animate__delay-3s">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Required Information</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-600 mt-1 mr-2"></i>
+                            <span class="text-gray-600">Company name</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-600 mt-1 mr-2"></i>
+                            <span class="text-gray-600">Business license copy</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-600 mt-1 mr-2"></i>
+                            <span class="text-gray-600">Contact person name and phone</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-600 mt-1 mr-2"></i>
+                            <span class="text-gray-600">Industry and main business</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Return to login -->
+                <div class="mt-8 text-center animate__animated animate__fadeIn animate__delay-4s">
+                    <p class="text-gray-600 mb-4">Already have an account?</p>
+                    <a href="login.html" class="inline-block px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors ripple">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Login
+                    </a>
+                </div>
             </div>
         </div>
     </div>

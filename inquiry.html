@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>切钢网 - 专业钢材交易平台</title>
+        <title>Custom Cutting</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -59,7 +59,7 @@
             font-family: 'Noto Sans SC', sans-serif;
           }
           
-          /* 以下样式在页面其他部分使用 */
+          /* Styles used in other parts of the page */
           .glassmorphism-dark {
             background: rgba(17, 24, 39, 0.8);
             backdrop-filter: blur(10px);
@@ -132,7 +132,7 @@
             transform: translateY(0);
           }
           
-          /* 粒子背景 */
+          /* Particle background */
           .particles {
             position: absolute;
             width: 100%;
@@ -149,7 +149,7 @@
             background-color: rgba(255, 255, 255, 0.5);
           }
           
-          /* 骨架屏 */
+          /* Skeleton screen */
           .skeleton {
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
             background-size: 200% 100%;
@@ -165,7 +165,7 @@
             }
           }
           
-          /* 徽章效果 */
+          /* Badge effect */
           .badge::before {
               content: "";
               position: absolute;
@@ -174,11 +174,11 @@
               padding: 3px;
               background: linear-gradient(to right, #dc2626, #f87171);
       
-              /* 修正：同时定义标准 mask 和 -webkit-mask */
+              /* Fix: define both standard mask and -webkit-mask */
               mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
               -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       
-              /* 修正：同时定义标准 mask-composite 和 -webkit-mask-composite */
+              /* Fix: define both standard mask-composite and -webkit-mask-composite */
               mask-composite: exclude;
               -webkit-mask-composite: xor;
       
@@ -194,7 +194,7 @@
             }
           }
           
-          /* 3D 卡片效果 */
+          /* 3D card effect */
           .card-3d {
             transform-style: preserve-3d;
             transform: perspective(1000px);
@@ -234,20 +234,20 @@
               }, 1000);
           }
           
-          // 观察元素进入视野
+          // Observe elements entering viewport
           function setupScrollAnimations() {
             const observer = new IntersectionObserver((entries) => {
               entries.forEach(entry => {
                 if (entry.isIntersecting) {
                   entry.target.classList.add('visible');
                   
-                  // 如果有Counter元素，开始计数
+                  // If there are Counter elements, start counting
                   if (entry.target.classList.contains('counter-trigger')) {
                     const counters = entry.target.querySelectorAll('.counter');
                     counters.forEach(counter => {
                       const target = parseInt(counter.getAttribute('data-target'));
                       const duration = 2000; // ms
-                      const step = target / (duration / 16); // 假设60fps
+                      const step = target / (duration / 16); // assuming 60fps
                       let current = 0;
                       
                       const updateCounter = () => {
@@ -272,7 +272,7 @@
             });
           }
           
-          // 粒子背景
+          // Particle background
           function createParticles() {
             const containers = document.querySelectorAll('.particles-container');
             
@@ -292,11 +292,11 @@
                 particle.style.height = `${size}px`;
                 particle.style.opacity = Math.random() * 0.5 + 0.2;
                 
-                // 随机位置
+                // Random position
                 particle.style.top = `${Math.random() * 100}%`;
                 particle.style.left = `${Math.random() * 100}%`;
                 
-                // 随机动画
+                // Random animation
                 const duration = Math.random() * 20 + 10;
                 const delay = Math.random() * 10;
                 particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
@@ -306,7 +306,7 @@
             });
           }
           
-          // 3D 卡片效果
+          // 3D card effect
           function init3DCards() {
             const cards = document.querySelectorAll('.card-3d');
             
@@ -333,13 +333,13 @@
             });
           }
           
-          // 页面加载完成后初始化
+          // Initialize when page is loaded
           document.addEventListener('DOMContentLoaded', () => {
             setupScrollAnimations();
             createParticles();
             init3DCards();
             
-            // 主页涟漪效果 (非导航栏的涟漪效果)
+            // Homepage ripple effect (non-navigation bar ripple effect)
             document.querySelectorAll('.ripple').forEach(button => {
               button.addEventListener('click', function(e) {
                 const rect = button.getBoundingClientRect();
@@ -364,140 +364,211 @@
         </script>
       </head>
 <body class="bg-gray-100">
-    <!-- 页头容器 -->
+    <!-- Header container -->
     <div id="header-container"></div>
 
     <div class="max-w-7xl mx-auto mt-6 bg-white p-6 rounded-lg shadow">
-        <!-- 发起询价 Section -->
-        <div class="border-b pb-4">
-            <h2 class="text-xl font-semibold flex items-center">
-                <i class="fas fa-search-dollar text-red-500 mr-2"></i> 发起询价
-            </h2>
+    <!-- Request for Quote & Purchase Requirements -->
+    <section class="bg-white rounded-2xl shadow-card p-6 mb-14 animate-on-scroll card-hover">
+        <div class="mb-10">
+          <h2 class="text-xl font-semibold flex items-center text-gray-800 mb-8">
+            <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center mr-3 animate-pulse">
+              <i class="fas fa-search-dollar text-primary-600"></i>
+            </div>
+            Request for Quote
+          </h2>
+          
+          <!-- 3D Card effect -->
+          <div class="card-3d mb-8">
+            <div class="card-3d-content">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-gray-700 font-medium mb-2">Category <span class="text-primary-600">*</span></label>
+                  <div class="relative">
+                    <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                      <option>Select category</option>
+                      <option>Medium Plate</option>
+                      <option>Coil Sheet</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                      <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-gray-700 font-medium mb-2">Material <span class="text-primary-600">*</span></label>
+                  <div class="relative">
+                    <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                      <option>Select material</option>
+                      <option>SM001</option>
+                      <option>SM002</option>
+                      <option>Other</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                      <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-gray-700 font-medium mb-2">Thickness <span class="text-primary-600">*</span></label>
+                  <input type="text" placeholder="Enter thickness in mm" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                </div>
+                <div>
+                  <label class="block text-gray-700 font-medium mb-2">Thickness Tolerance <span class="text-primary-600">*</span></label>
+                  <div class="relative">
+                    <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                      <option>Select thickness tolerance</option>
+                      <option>Class A</option>
+                      <option>Class B</option>
+                      <option>Class C</option>
+                      <option>Class N</option>
+                      <option>Other</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                      <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-gray-700 font-medium mb-2">Density</label>
+                  <input type="text" value="0 tons/cm³" class="w-full border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-gray-500" readonly>
+                </div>
+                <div>
+                  <label class="block text-gray-700 font-medium mb-2">Application <span class="text-primary-600">*</span></label>
+                  <div class="relative">
+                    <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                      <option>Select application</option>
+                      <option>Shipbuilding</option>
+                      <option>Rail</option>
+                      <option>Other</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                      <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <!-- Inquiry Form -->
-        <div class="grid grid-cols-3 gap-4 mt-4">
+  
+        <!-- Product Section -->
+        <div class="pb-10 mb-10 border-b border-gray-100">
+          <div class="flex items-center mb-8">
+            <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center mr-3 pulse-border">
+              <span class="text-primary-600 font-semibold text-lg">1</span>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-800">Product 1</h3>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div>
-                <label class="block text-gray-700 font-medium">* 分类</label>
-                <select class="w-full border rounded px-3 py-2">
-                    <option>请选择分类</option>
+              <label class="block text-gray-700 font-medium mb-2">Cutting Shape <span class="text-primary-600">*</span></label>
+              <div class="relative">
+                <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                  <option>Select cutting shape</option>
+                  <option>Square Cut</option>
+                  <option>Circle Cut</option>
+                  <option>Ring Cut</option>
                 </select>
+                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                  <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+              </div>
             </div>
             <div>
-                <label class="block text-gray-700 font-medium">* 材质</label>
-                <select class="w-full border rounded px-3 py-2">
-                    <option>请选择材质</option>
+              <label class="block text-gray-700 font-medium mb-2">Quantity <span class="text-primary-600">*</span></label>
+              <input type="text" placeholder="Enter quantity" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">Mill Requirements <span class="text-primary-600">*</span></label>
+              <input type="text" placeholder="Enter mill requirements" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+            </div>
+          </div>
+          <div class="bg-gray-50 rounded-xl p-5">
+            <p class="text-gray-700">Estimated weight by specifications (no additional thickness): <span class="font-bold text-primary-600">0 tons</span></p>
+          </div>
+        </div>
+  
+        <!-- Purchase Requirements Section -->
+        <div>
+          <h2 class="text-xl font-semibold flex items-center text-gray-800 mb-8">
+            <div class="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center mr-3 animate-pulse">
+              <i class="fas fa-shopping-cart text-primary-600"></i>
+            </div>
+            Purchase Requirements
+          </h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">Quote Deadline <span class="text-primary-600">*</span></label>
+              <div class="relative">
+                <input type="date" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+              </div>
+            </div>
+            <div>
+              <div>
+                  <label class="block text-gray-700 font-medium mb-2">Quote Validity <span class="text-primary-600">*</span></label>
+                  <input type="text" placeholder="Enter quote validity in days" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                </div>
+            </div>
+            <div>
+              <label class="block text-gray-700 font-medium mb-2">Expected Delivery Time <span class="text-primary-600">*</span></label>
+              <div class="relative">
+                <select class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white appearance-none focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                  <option>Select delivery time</option>
+                  <option>7</option>
+                  <option>15</option>
+                  <option>30</option>
                 </select>
+                <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                  <i class="fas fa-chevron-down text-gray-400"></i>
+                </div>
+              </div>
             </div>
             <div>
-                <label class="block text-gray-700 font-medium">密度</label>
-                <input type="text" value="0吨/cm³" class="w-full border rounded px-3 py-2 bg-gray-100" readonly>
+              <div>
+                  <label class="block text-gray-700 font-medium mb-2">Supplier Scope <span class="text-primary-600">*</span></label>
+                  <input type="text" placeholder="Enter supplier scope" class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all">
+                </div>
+              </div>
             </div>
-            <div>
-                <label class="block text-gray-700 font-medium">* 厚度</label>
-                <input type="text" placeholder="请输入厚度 mm" class="w-full border rounded px-3 py-2">
+          </div>
+          
+          <div class="mb-8">
+            <label class="block text-gray-700 font-medium mb-3">Notes</label>
+            <textarea class="w-full border border-gray-300 rounded-xl px-4 py-3 h-36 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent transition-all" placeholder="Enter notes"></textarea>
+          </div>
+          
+          <div class="flex items-center mb-10">
+              <label class="flex items-center cursor-pointer">
+                <div class="relative">
+                  <!-- Hidden checkbox -->
+                  <input type="checkbox" class="sr-only peer">
+                  <!-- Unchecked border state -->
+                  <div class="w-6 h-6 border-2 rounded-md border-gray-300 mr-3 transition-all peer-checked:border-primary-600 peer-checked:bg-primary-600"></div>
+                  <!-- Checked checkmark state -->
+                  <div class="absolute left-0 top-0 w-6 h-6 flex items-center justify-center opacity-0 transition-all peer-checked:opacity-100">
+                    <i class="fas fa-check text-xs text-white"></i>
+                  </div>
+                </div>
+                <span class="text-gray-700">Anonymous Inquiry</span>
+              </label>
             </div>
-            <div>
-                <label class="block text-gray-700 font-medium">* 厚度公差</label>
-                <select class="w-full border rounded px-3 py-2">
-                    <option>请选择厚度公差</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-gray-700 font-medium">* 用途</label>
-                <select class="w-full border rounded px-3 py-2">
-                    <option>请选择用途</option>
-                </select>
-            </div>
+            
+          <div class="flex flex-col sm:flex-row justify-between gap-4">
+            <a href="login.html" class="bg-primary-600 text-white px-10 py-4 rounded-full font-semibold hover:bg-primary-700">
+              <i class="fas fa-paper-plane mr-2"></i> Get Quote
+            </a>
+          </div>
         </div>
-
-        <!-- 商品 Section -->
-        <div class="mt-6 border-t pt-4 border-red-300">
-            <h3 class="text-lg font-semibold text-red-500">商品 1</h3>
-            <div class="grid grid-cols-3 gap-4 mt-3">
-                <div>
-                    <label class="block text-gray-700 font-medium">* 切割形状</label>
-                    <select class="w-full border rounded px-3 py-2">
-                        <option>请选择切割形状</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium">* 片数</label>
-                    <input type="text" placeholder="请输入片数" class="w-full border rounded px-3 py-2">
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium">* 钢厂要求</label>
-                    <select class="w-full border rounded px-3 py-2">
-                        <option>请选择钢厂要求</option>
-                    </select>
-                </div>
-            </div>
-            <p class="text-gray-600 mt-2">按规格推算重量 (无附加厚度)：<span class="font-bold">0吨</span></p>
-        </div>
-
-        <!-- 采购要求 Section -->
-        <div class="mt-6 border-t pt-4">
-            <h2 class="text-xl font-semibold flex items-center">
-                <i class="fas fa-shopping-cart text-red-500 mr-2"></i> 采购要求
-            </h2>
-
-            <div class="grid grid-cols-3 gap-4 mt-4">
-                <div>
-                    <label class="block text-gray-700 font-medium">* 报价截止时间</label>
-                    <select class="w-full border rounded px-3 py-2">
-                        <option>请选择报价截止时间</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium">* 报价有效</label>
-                    <select class="w-full border rounded px-3 py-2">
-                        <option>请选择报价有效天数</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium">* 期望交货时间</label>
-                    <input type="text" placeholder="请输入期望交货时间 天" class="w-full border rounded px-3 py-2">
-                </div>
-                <div>
-                    <label class="block text-gray-700 font-medium">* 供应商范围</label>
-                    <select class="w-full border rounded px-3 py-2">
-                        <option>请选择供应商范围</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <label class="block text-gray-700 font-medium">图片</label>
-                <div class="w-24 h-24 border flex items-center justify-center text-gray-400 bg-gray-50 cursor-pointer">
-                    +
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <label class="block text-gray-700 font-medium">备注</label>
-                <textarea class="w-full border rounded px-3 py-2 h-24" placeholder="请输入备注"></textarea>
-            </div>
-
-            <div class="flex items-center mt-4">
-                <input type="checkbox" class="mr-2"> <span class="text-gray-700">匿名询单</span>
-            </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="mt-6 flex justify-between">
-            <button class="bg-orange-500 text-white px-6 py-2 rounded-full font-semibold flex items-center">
-                <i class="fas fa-paper-plane mr-2"></i> 获取报价
-            </button>
-            <button class="bg-gray-300 text-gray-700 px-6 py-2 rounded-full font-semibold flex items-center">
-                <i class="fas fa-save mr-2"></i> 保存草稿箱
-            </button>
-        </div>
+      </section>
     </div>
 
-        <!-- 页脚容器 -->
+        <!-- Footer container -->
         <div id="footer-container"></div>
 
-        <!-- 加载组件脚本 -->
+        <!-- Load component scripts -->
         <script src="/includes/load-components.js"></script>
 
 </body>

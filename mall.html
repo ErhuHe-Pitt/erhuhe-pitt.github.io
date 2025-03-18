@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>拼切集市</title>
+        <title>Cutting Marketplace</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -59,7 +59,7 @@
             font-family: 'Noto Sans SC', sans-serif;
           }
           
-          /* 以下样式在页面其他部分使用 */
+          /* Styles used in other parts of the page */
           .glassmorphism-dark {
             background: rgba(17, 24, 39, 0.8);
             backdrop-filter: blur(10px);
@@ -132,7 +132,7 @@
             transform: translateY(0);
           }
           
-          /* 粒子背景 */
+          /* Particle background */
           .particles {
             position: absolute;
             width: 100%;
@@ -149,7 +149,7 @@
             background-color: rgba(255, 255, 255, 0.5);
           }
           
-          /* 骨架屏 */
+          /* Skeleton screen */
           .skeleton {
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
             background-size: 200% 100%;
@@ -165,7 +165,7 @@
             }
           }
           
-          /* 徽章效果 */
+          /* Badge effect */
           .badge::before {
               content: "";
               position: absolute;
@@ -174,11 +174,11 @@
               padding: 3px;
               background: linear-gradient(to right, #dc2626, #f87171);
       
-              /* 修正：同时定义标准 mask 和 -webkit-mask */
+              /* Fix: define both standard mask and -webkit-mask */
               mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
               -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       
-              /* 修正：同时定义标准 mask-composite 和 -webkit-mask-composite */
+              /* Fix: define both standard mask-composite and -webkit-mask-composite */
               mask-composite: exclude;
               -webkit-mask-composite: xor;
       
@@ -194,7 +194,7 @@
             }
           }
           
-          /* 3D 卡片效果 */
+          /* 3D card effect */
           .card-3d {
             transform-style: preserve-3d;
             transform: perspective(1000px);
@@ -234,20 +234,20 @@
               }, 1000);
           }
           
-          // 观察元素进入视野
+          // Observe elements entering viewport
           function setupScrollAnimations() {
             const observer = new IntersectionObserver((entries) => {
               entries.forEach(entry => {
                 if (entry.isIntersecting) {
                   entry.target.classList.add('visible');
                   
-                  // 如果有Counter元素，开始计数
+                  // If there are Counter elements, start counting
                   if (entry.target.classList.contains('counter-trigger')) {
                     const counters = entry.target.querySelectorAll('.counter');
                     counters.forEach(counter => {
                       const target = parseInt(counter.getAttribute('data-target'));
                       const duration = 2000; // ms
-                      const step = target / (duration / 16); // 假设60fps
+                      const step = target / (duration / 16); // assuming 60fps
                       let current = 0;
                       
                       const updateCounter = () => {
@@ -272,7 +272,7 @@
             });
           }
           
-          // 粒子背景
+          // Particle background
           function createParticles() {
             const containers = document.querySelectorAll('.particles-container');
             
@@ -292,11 +292,11 @@
                 particle.style.height = `${size}px`;
                 particle.style.opacity = Math.random() * 0.5 + 0.2;
                 
-                // 随机位置
+                // Random position
                 particle.style.top = `${Math.random() * 100}%`;
                 particle.style.left = `${Math.random() * 100}%`;
                 
-                // 随机动画
+                // Random animation
                 const duration = Math.random() * 20 + 10;
                 const delay = Math.random() * 10;
                 particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
@@ -306,7 +306,7 @@
             });
           }
           
-          // 3D 卡片效果
+          // 3D card effect
           function init3DCards() {
             const cards = document.querySelectorAll('.card-3d');
             
@@ -333,13 +333,13 @@
             });
           }
           
-          // 页面加载完成后初始化
+          // Initialize when page is loaded
           document.addEventListener('DOMContentLoaded', () => {
             setupScrollAnimations();
             createParticles();
             init3DCards();
             
-            // 主页涟漪效果 (非导航栏的涟漪效果)
+            // Homepage ripple effect (non-navigation bar ripple effect)
             document.querySelectorAll('.ripple').forEach(button => {
               button.addEventListener('click', function(e) {
                 const rect = button.getBoundingClientRect();
@@ -364,114 +364,126 @@
         </script>
       </head>
 <body class="bg-gray-100">
-    <!-- 页头容器 -->
+    <!-- Header container -->
     <div id="header-container"></div>
 
-    <!-- 拼切集市 Section -->
+    <!-- Cutting Marketplace Section -->
     <div class="max-w-7xl mx-auto mt-6 bg-white p-6 rounded-lg shadow">
         <!-- Title Section -->
         <div class="flex justify-between items-center border-b pb-3">
             <h2 class="text-xl font-semibold flex items-center">
-                <i class="fas fa-layer-group text-red-500 mr-2"></i> 拼切集市
+                <i class="fas fa-layer-group text-red-500 mr-2"></i> Cutting Marketplace
             </h2>
         </div>
 
-        <!-- Category Tabs -->
-        <div class="mt-4 flex space-x-2">
-            <button class="bg-red-500 text-white px-4 py-1 text-sm rounded-full">中厚板</button>
-            <button class="bg-gray-200 text-gray-600 px-4 py-1 text-sm rounded-full">卷板材</button>
-        </div>
 
-        <!-- Filter Section -->
-        <div class="mt-6 bg-gray-50 p-4 rounded-lg">
-            <h3 class="text-gray-600 text-sm">当前搜索</h3>
 
-            <!-- 品名 Filter -->
-            <div class="mt-3 flex space-x-2">
-                <span class="font-semibold text-gray-700">品名:</span>
-                <div class="space-x-2">
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">中厚板</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">低合金中板</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">高强结构板</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">普通结构板</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">桥梁板</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">耐磨板</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">水电用钢板</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">模具钢板</button>
-                </div>
-            </div>
 
-            <!-- 材质 Filter -->
-            <div class="mt-3 flex space-x-2">
-                <span class="font-semibold text-gray-700">材质:</span>
-                <div class="space-x-2">
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q355C</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q355B</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q235A</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q460C</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">Q345R</button>
-                    <button class="bg-gray-200 px-3 py-1 rounded text-sm">SM490A</button>
-                </div>
-            </div>
-
-            <!-- 规格 Filter -->
-            <div class="mt-3 grid grid-cols-4 gap-4">
-                <div>
-                    <label class="text-gray-700 font-medium block">厚度</label>
-                    <input type="text" placeholder="最小值 -" class="w-full border rounded px-3 py-2">
-                </div>
-                <div>
-                    <label class="text-gray-700 font-medium block">宽度</label>
-                    <input type="text" placeholder="最小值 -" class="w-full border rounded px-3 py-2">
-                </div>
-                <div>
-                    <label class="text-gray-700 font-medium block">重量</label>
-                    <input type="text" placeholder="最小值 -" class="w-full border rounded px-3 py-2">
-                </div>
-                <div class="flex items-end">
-                    <button class="bg-red-500 text-white px-4 py-2 rounded">确认</button>
-                </div>
-            </div>
-        </div>
 
         <!-- Product Table -->
         <div class="mt-6 overflow-x-auto">
             <table class="w-full border-collapse border text-gray-700">
                 <thead>
-                    <tr class="bg-gray-100">
-                        <th class="border px-4 py-2">图片</th>
-                        <th class="border px-4 py-2">店铺名称</th>
-                        <th class="border px-4 py-2">品名</th>
-                        <th class="border px-4 py-2">材质</th>
-                        <th class="border px-4 py-2">规格</th>
-                        <th class="border px-4 py-2">片数</th>
-                        <th class="border px-4 py-2">重量 (吨)</th>
-                        <th class="border px-4 py-2">价格 (元/吨)</th>
-                        <th class="border px-4 py-2">交货地址</th>
-                        <th class="border px-4 py-2">操作</th>
+                    <tr>
+                      <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">Product</th>
+                      <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">Material</th>
+                      <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">Specifications</th>
+                      <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">Pieces</th>
+                      <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">Weight (tons)</th>
+                      <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">Price (yuan/ton)</th>
+                      <th class="py-5 px-4 text-left text-gray-600 font-medium bg-gray-50">Delivery Location</th>
+                      <th class="py-5 px-4 text-center text-gray-600 font-medium bg-gray-50 rounded-tr-xl">Action</th>
                     </tr>
-                </thead>
-                <tbody>
-                    <!-- Sample Row -->
-                    <tr class="bg-white">
-                        <td class="border px-4 py-2"><img src="https://placehold.co/50x50" alt="钢材图片"></td>
-                        <td class="border px-4 py-2">飞扬店铺</td>
-                        <td class="border px-4 py-2">中厚板</td>
-                        <td class="border px-4 py-2">Q355C</td>
-                        <td class="border px-4 py-2">10.00*2500.00*12500.00</td>
-                        <td class="border px-4 py-2">1</td>
-                        <td class="border px-4 py-2">3708</td>
-                        <td class="border px-4 py-2">安阳市</td>
-                        <td class="border px-4 py-2 text-gray-500 hover:text-red-500 cursor-pointer">&gt;</td>
+                  </thead>
+                  <tbody>
+                    <tr class="border-b border-gray-100">
+
+                      <td class="py-5 px-4">Medium Plate</td>
+                      <td class="py-5 px-4">Q355B</td>
+                      <td class="py-5 px-4">27.10*2600.00*13100.00</td>
+                      <td class="py-5 px-4">-</td>
+                      <td class="py-5 px-4">3605</td>
+                      <td class="py-5 px-4 font-semibold text-primary-600">¥4,120</td>
+                      <td class="py-5 px-4">
+                        <div class="flex items-center">
+                          <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                          Pittsburgh, PA
+                        </div>
+                      </td>
+                      <td class="py-5 px-4 text-center">
+                        <a href="login.html" class="w-10 h-10 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-110 hover:shadow-lg ripple inline-flex items-center justify-center">
+                          <i class="fas fa-arrow-right"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+
+                      <td class="py-5 px-4">Medium Plate</td>
+                      <td class="py-5 px-4">Q355C</td>
+                      <td class="py-5 px-4">10.00*2500.00*12500.00</td>
+                      <td class="py-5 px-4">-</td>
+                      <td class="py-5 px-4">3708</td>
+                      <td class="py-5 px-4 font-semibold text-primary-600">¥3,950</td>
+                      <td class="py-5 px-4">
+                        <div class="flex items-center">
+                          <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                          Columbus, OH
+                        </div>
+                      </td>
+                      <td class="py-5 px-4 text-center">
+                        <a href="login.html" class="w-10 h-10 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-110 hover:shadow-lg ripple inline-flex items-center justify-center">
+                          <i class="fas fa-arrow-right"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="border-b border-gray-100">
+
+                      <td class="py-5 px-4">Low Alloy Plate</td>
+                      <td class="py-5 px-4">Q355C</td>
+                      <td class="py-5 px-4">100.00*1000.00*1000.00</td>
+                      <td class="py-5 px-4">-</td>
+                      <td class="py-5 px-4">515</td>
+                      <td class="py-5 px-4 font-semibold text-primary-600">¥4,080</td>
+                      <td class="py-5 px-4">
+                        <div class="flex items-center">
+                          <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                          Columbus, OH
+                        </div>
+                      </td>
+                      <td class="py-5 px-4 text-center">
+                        <a href="login.html" class="w-10 h-10 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-110 hover:shadow-lg ripple inline-flex items-center justify-center">
+                          <i class="fas fa-arrow-right"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+
+                      <td class="py-5 px-4">Low Alloy Plate</td>
+                      <td class="py-5 px-4">SM490A</td>
+                      <td class="py-5 px-4">13.00*2580.00*9650.00</td>
+                      <td class="py-5 px-4">-</td>
+                      <td class="py-5 px-4">3605</td>
+                      <td class="py-5 px-4 font-semibold text-primary-600">¥4,520</td>
+                      <td class="py-5 px-4">
+                        <div class="flex items-center">
+                          <i class="fas fa-map-marker-alt text-primary-500 mr-2"></i>
+                          Cleveland, OH
+                        </div>
+                      </td>
+                      <td class="py-5 px-4 text-center">
+                        <a href="login.html" class="w-10 h-10 bg-primary-50 text-primary-600 rounded-full hover:bg-primary-100 transition-all transform hover:scale-110 hover:shadow-lg ripple inline-flex items-center justify-center">
+                          <i class="fas fa-arrow-right"></i>
+                        </a>
+                      </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <!-- 页脚容器 -->
+    <!-- Footer container -->
     <div id="footer-container"></div>
 
-    <!-- 加载组件脚本 -->
+    <!-- Load component scripts -->
     <script src="/includes/load-components.js"></script>
 
 </body>
